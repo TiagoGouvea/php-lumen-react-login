@@ -14,14 +14,12 @@ class AuthController extends BaseController
 {
     /**
      * The request instance.
-     *
      * @var \Illuminate\Http\Request
      */
     private $request;
 
     /**
      * Create a new controller instance.
-     *
      * @param  \Illuminate\Http\Request $request
      * @return void
      */
@@ -32,7 +30,6 @@ class AuthController extends BaseController
 
     /**
      * Create a new token.
-     *
      * @param  \App\User $user
      * @return string
      */
@@ -52,7 +49,6 @@ class AuthController extends BaseController
 
     /**
      * Authenticate a user and return the token if the provided credentials are correct.
-     *
      * @param  \App\User $user
      * @return mixed
      */
@@ -65,10 +61,6 @@ class AuthController extends BaseController
         // Find the user by email
         $user = User::where('email', $this->request->input('email'))->first();
         if (!$user) {
-            // You wil probably have some sort of helpers or whatever
-            // to make sure that you have the same response format for
-            // differents kind of responses. But let's return the
-            // below respose for now.
             return response()->json([
                 'error' => 'Email does not exist.'
             ], 400);

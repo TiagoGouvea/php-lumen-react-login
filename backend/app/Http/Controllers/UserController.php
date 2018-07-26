@@ -14,14 +14,12 @@ class UserController extends BaseController
 {
     /**
      * The request instance.
-     *
      * @var \Illuminate\Http\Request
      */
     private $request;
 
     /**
      * Create a new controller instance.
-     *
      * @param  \Illuminate\Http\Request $request
      * @return void
      */
@@ -32,15 +30,14 @@ class UserController extends BaseController
 
     /**
      * Authenticate a user and return the token if the provided credentials are correct.
-     *
      * @param  \App\User $user
      * @return mixed
      */
     public function me()
     {
-        return response()->json([
+        return response()->json(
             $this->request->auth
-        ], 200);
+            , 200);
     }
 
 }

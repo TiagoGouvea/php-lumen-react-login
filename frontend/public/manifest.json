@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Lumen+React",
+  "name": "PHP Lumen React Login",
   "icons": [
     {
       "src": "favicon.ico",

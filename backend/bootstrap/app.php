@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 try {
-    (new Dotenv\Dotenv(__DIR__.'/../'))->load();
+    (new Dotenv\Dotenv(__DIR__ . '/../'))->load();
 } catch (Dotenv\Exception\InvalidPathException $e) {
     //
 }
@@ -12,20 +12,16 @@ try {
 |--------------------------------------------------------------------------
 | Create The Application
 |--------------------------------------------------------------------------
-|
-| Here we will load the environment and create the application instance
-| that serves as the central piece of this framework. We'll use this
-| application as an "IoC" container and router for this framework.
-|
 */
 
 $app = new Laravel\Lumen\Application(
-    realpath(__DIR__.'/../')
+    realpath(__DIR__ . '/../')
 );
 
 $app->withFacades();
 
 $app->withEloquent();
+
 
 /*
 |--------------------------------------------------------------------------
@@ -52,27 +48,28 @@ $app->singleton(
 |--------------------------------------------------------------------------
 | Register Middleware
 |--------------------------------------------------------------------------
-| JWT MiddleWare to valide user requests
 */
 
+// CorsMiddleware to handle cros domain requests
+$app->middleware([
+    App\Http\Middleware\CorsMiddleware::class
+]);
+
+
+// JWT MiddleWare to valide user requests
 $app->routeMiddleware([
     'jwt.auth' => App\Http\Middleware\JwtMiddleware::class,
 ]);
+
 
 /*
 |--------------------------------------------------------------------------
 | Register Service Providers
 |--------------------------------------------------------------------------
-|
-| Here we will register all of the application's service providers which
-| are used to bind services into the container. Service providers are
-| totally optional, so you are not required to uncomment this line.
-|
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
+// Setup CORS
+$app->register(App\Providers\CatchAllOptionsRequestsProvider::class);
 $app->register(Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
 
 /*
@@ -89,7 +86,7 @@ $app->register(Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
 ], function ($router) {
-    require __DIR__.'/../routes/web.php';
+    require __DIR__ . '/../routes/web.php';
 });
 
 return $app;
